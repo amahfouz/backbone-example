@@ -3,10 +3,17 @@ import * as _ from 'underscore';
 import Backbone from 'backbone';
 
 import MessageType from './models';
+import messageEvTemplate from './message-event.template.html'
+
+//
+// Message Event View
+//
 
 let MessageEventPropsView = Backbone.View.extend({
    
-    el : $('#message-event-props-view'),   
+    el : $('#props-panel'),   
+
+    template : _.template(messageEvTemplate),
 
     events: {  
         'input input': 'nameChanged',
@@ -16,6 +23,9 @@ let MessageEventPropsView = Backbone.View.extend({
         if (! options.model) throw "Model not set.";
         _.bindAll(this, "render", "nameChanged");
         this.listenTo(this.model, 'change', this.render);
+        Backbone.Events.on('wl-shape-selected', function() {
+            console.log("listened");
+        })
     },
 
     nameChanged: function(){
@@ -23,7 +33,8 @@ let MessageEventPropsView = Backbone.View.extend({
     },
 
     render: function() {
-        this.input().val(this.model.get(MessageType.NAME))
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
     },
 
     input : function() {
@@ -31,6 +42,4 @@ let MessageEventPropsView = Backbone.View.extend({
     }
 });
 
-
-
-export default MessageEventPropsView;
+export default MessageEventPropsView

@@ -1,7 +1,5 @@
-import MessageType from './models';
-import MessageEventPropsView from './views';
+import ControlPanel from './control-panel.view';
 
+// bootstrap the app
 
-//////////////// bootstrap app
-
-new MessageEventPropsView( {'model' : new MessageType()})
+new ControlPanel()

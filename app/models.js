@@ -10,7 +10,7 @@ let MessageType = Backbone.Model.extend({
     }
 },
 {
-    NAME : 'message-name'
+    NAME : 'messageName'
 });
 
 export default MessageType;
