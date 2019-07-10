@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -13,13 +14,28 @@ module.exports = {
       {
         test: /\.html$/,
         use: 'raw-loader'
-      }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: require.resolve('jquery'),
+        use: [{
+          loader: 'expose-loader',
+          options: '$'
+        }]
+      }          
     ]
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: '**/*.{html,css}', context: 'app/' }
-    ])
+      { from: '**/*.{html,css}', context: 'app/' },
+    ]),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    })    
   ],
   mode: 'development',
   devtool: 'source-map'
