@@ -5,6 +5,7 @@ import MessageEventPropsView from './message-event/message-event-props.view'
 
 import TaskPropsModel from './task/task-props.model'
 import TaskPropsView from './task/task-props.view'
+import SingleIoMappingModel from './mapping/single-io-mapping.model';
 
 //
 // Control Panel
@@ -26,8 +27,21 @@ let ControlPanel = Backbone.View.extend({
 
         let view, model;
 
+        let Mapping = Backbone.Collection.extend({
+            model : SingleIoMappingModel
+        });
+
+        let collection = new Mapping([
+            {'source' : 's1', 'destination' : 'd1'},
+            {'source' : 's2', 'destination' : 'd2'},
+            {'source' : 's3', 'destination' : 'd3'}
+        ]);
+
         if (event.currentTarget.id == 'message-node') {
-            model = new MessageEventPropsModel({'messageName' : 'Success'});
+            model = new MessageEventPropsModel({
+                'messageName' : 'Success',
+                'collection' : collection
+            });
             view = new MessageEventPropsView( { 'model' : model } )
         }
         else if (event.currentTarget.id == 'task-node') {

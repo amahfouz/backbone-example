@@ -3,6 +3,7 @@ import * as _ from 'underscore';
 import Backbone from 'backbone';
 
 import messageEvTemplate from './message-event-props.template.html'
+import IoMappingView from '../mapping/io-mapping.view';
 
 //
 // Message Event View
@@ -14,10 +15,15 @@ let MessageEventPropsView = Backbone.View.extend({
 
     template : _.template(messageEvTemplate, {
         interpolate: /\{\{(.+?)\}\}/g
-      }),
+    }),
 
     events: {  
         'input input': 'nameChanged',
+        'click #print': 'print'
+    },
+
+    print : function() {
+        console.log(this.model)
     },
 
     initialize: function(options) {
@@ -34,9 +40,10 @@ let MessageEventPropsView = Backbone.View.extend({
         this.model.set('messageName', this.input().val());
     },
 
-    render: function() {
-        console.log(this.model.toJSON())
+    render: function() {        
         this.$el.html(this.template(this.model.toJSON()));
+        let nestedModel = { 'model' : this.model.get('collection') };
+        this.$el.append(new IoMappingView(nestedModel).render().el)
         return this;
     },
 
