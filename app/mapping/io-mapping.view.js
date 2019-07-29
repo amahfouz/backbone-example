@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import * as _ from 'underscore';
 import SingleIoMappingView from './single-io-mapping.view';
 
-import ioMappingViewTemplate from 'io-mapping.template.html'
+import ioMappingViewTemplate from './io-mapping.template.html'
 
 let IoMappingView = Backbone.View.extend({
 
